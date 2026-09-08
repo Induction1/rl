@@ -1,0 +1,84 @@
+# text2sql RL v1 — Qwen2.5-Coder-3B-Instruct, RL from instruct (no SFT), execution reward, no hints.
+# 2 GPUs (1 trainer + 1 inference), MARS RunPod. DRAFT: knob names mirror rl_phase1.toml (prime-rl 0.9);
+# re-check against the installed version's config on the pod before launch (spec rule: never from memory).
+# Decisions (his, 2026-09-05): ScaleRL-style recipe where prime-rl exposes it (async pipeline, mismatch
+# masking, zero-variance filtering via online band filter, no positive resampling); LoRA; SQL-only format;
+# pure binary reward. Cost gate: ~1 min/step est. → 250 steps ≈ 4–5 h ≈ $15–20 on a 2×A100 pod.
+# Ending rules (manual, from wandb + metrics.jsonl):
+#   done early: eval bird_dev EX (no hints) flat ±0.02 over 3 evals after step 100
+#   kill: entropy < 0.05 · executed-rate < 0.5 for 30 steps · mean completion > 400 tok · reward flat ±0.02 for 100 steps
+
+max_steps = 250
+seq_len = 4096            # schema (~1.2k tok) + question + reply (≤ 256)
+
+[deployment]
+num_train_gpus = 1
+num_infer_gpus = 1
+
+[model]
+name = "Qwen/Qwen2.5-Coder-3B-Instruct"
+
+[monitors.wandb]
+project = "text2sql"
+name = "t2s-v1"
+entity = "induction1"
+
+[trainer.model.lora]
+rank = 32
+alpha = 64
+
+[trainer.optim]
+lr = 2e-5
+
+[inference]                # v0.9.0 requires this block or no policy server starts (orchestrator would hang)
+
+[inference.vllm]
+enable_lora = true
+max_lora_rank = 32
+max_model_len = 4096
+gpu_memory_utilization = 0.8
+
+[orchestrator.renderer]
+name = "default"        # Qwen2.5-Coder isn't in prime-rl's renderer map; default = the model's own chat template
+
+[orchestrator]
+batch_size = 384          # ROLLOUTS per optimizer step (prime-rl counts samples, not prompts) = 48 prompts × group 8
+group_size = 8            # rollouts per prompt (GRPO group)
+
+[orchestrator.model.lora]
+
+[orchestrator.train.sampling]
+temperature = 1.0
+max_completion_tokens = 256   # SQL only
+
+[[orchestrator.train.source]]
+name = "text2sql"
+env.taskset.id = "text2sql"
+env.taskset.split = "train"
+env.taskset.pool_path = "/workspace/text2sql/data/pool/pool_run1.jsonl"
+env.taskset.seed = 0
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+# Evals every 25 steps (and at step 0 = the base model): the 106 held-out BIRD questions, hints withheld
+# (headline) and with hints (secondary).
+[orchestrator.eval]
+interval = 25
+
+[[orchestrator.eval.source]]
+name = "bird-dev-nohint"
+num_examples = 106
+env.taskset.id = "text2sql"
+env.taskset.split = "bird_dev"
+env.taskset.with_hints = false
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+[[orchestrator.eval.source]]
+name = "bird-dev-hint"
+num_examples = 106
+env.taskset.id = "text2sql"
+env.taskset.split = "bird_dev"
+env.taskset.with_hints = true
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
