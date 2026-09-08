@@ -1,0 +1,119 @@
+# text2sql RL v2 — Qwen2.5-Coder-3B-Instruct, RL from instruct (no SFT), execution reward, STANDARD BIRD INPUT.
+# 2 GPUs (1 trainer + 1 inference). prime-rl v0.9.0 (knob names verified against the v0.9.0 source 2026-09-06;
+# still `rl --dry-run True` on the pod before launch — playbook L1).
+# What changed vs rl_v1.toml (his decisions 2026-09-06, after the run-1 failure read + the $0.40 gate):
+#   prompt v2 = legend + join graph in prose + exact value lists + "only output what is asked" (gate: base 6.7 → 20.3 EX@1)
+#   pool v2   = run-1 pool + 747 schema-graph hop / date-phrasing / output-convention rows (gate: 83 % mixed groups)
+#   verifier  = rule 8 (1000-row cap) lifted; binary execution reward unchanged
+#   eval      = 4 samples per question (mean + pass@4), T = 1.0 (matches training); 3 held-out sources
+#   ckpt      = every 25 steps, keep 3;  run name = t2s-v2  (suffix per relaunch: t2s-v2b, …)
+#   SQL-only format (think FAILED the pre-registered gate rule: 0.154 vs 0.203 EX@1 lenient)
+# Cost gate: run 1 ≈ 1.5 min/step at 384 rollouts → 250 steps ≈ 6 h ≈ $19 on 2×A100 SXM ($3.18/h). Prompt is ~2.8k tok
+# now (was ~1.9k) → expect ~1.7–2 min/step → ≈ $22–25. Stop early if no-hint eval mean is flat ±0.02 over 3 evals after step 150.
+# Ending rules (manual, from wandb + metrics.jsonl):
+#   kill: entropy < 0.05 · executed-rate < 0.5 for 30 steps · mean completion > 200 tok · reward flat ±0.02 for 100 steps
+
+max_steps = 250
+seq_len = 32768           # PACKING bin, not the sample cap (2026-09-07 02:00 fix): rollouts are ~2.9k tok, so at 4096 only ONE fit per
+                          # trainer micro-batch → 384 micro-batches/step, MFU 15 %, 4.5 min/step. 16384 packs ~5 → ~77 micro-batches.
+                          # Sample cap stays vllm max_model_len 4096 (prompt ~2.8k + ≤256 completion).
+
+[resume]                  # empty block = resume from the latest checkpoint under outputs/<run.name> (v0.9.0 rl.py: ResumeConfig)
+
+[run]
+name = "t2s-v2"
+
+[ckpt]
+interval = 25
+keep_last = 1              # 2026-09-07: trainer ckpts are 14 GB (full FSDP state); 3 + keep_interval blew the 50 GB volume quota at step 50
+
+[deployment]
+num_train_gpus = 1
+num_infer_gpus = 1
+
+[model]
+name = "Qwen/Qwen2.5-Coder-3B-Instruct"
+
+[monitors.wandb]
+project = "text2sql"
+name = "t2s-v2"
+entity = "induction1"
+
+[trainer.model.lora]
+rank = 32
+alpha = 64
+
+[trainer.optim]
+lr = 2e-5
+
+[inference]                # v0.9.0 requires this block or no policy server starts
+
+[inference.vllm]
+enable_lora = true
+max_lora_rank = 32
+max_model_len = 4096
+gpu_memory_utilization = 0.8
+
+[orchestrator.renderer]
+name = "default"
+
+[orchestrator]
+batch_size = 384          # ROLLOUTS per step = 48 prompts × group 8 (prime-rl counts samples, not prompts)
+group_size = 8
+
+[orchestrator.model.lora]
+
+[orchestrator.train.sampling]
+temperature = 1.0
+max_completion_tokens = 256
+
+[[orchestrator.train.source]]
+name = "text2sql"
+env.taskset.id = "text2sql"
+env.taskset.split = "train"
+env.taskset.pool_path = "/workspace/text2sql/data/pool/pool_run2.jsonl"
+env.taskset.prompt_version = 2
+env.taskset.seed = 0
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+# Evals every 25 steps (step 0 = base model with the v2 prompt = 0.203 mean from the gate).
+[orchestrator.eval]
+interval = 25
+retrigger_on_resume = true   # 2026-09-07 05:10: processes died mid step-50 eval; re-run it on resume
+group_size = 4            # 4 samples per question → mean EX and pass@4; single-sample had a ±6-pt floor in run 1
+
+[orchestrator.eval.sampling]
+temperature = 1.0
+max_completion_tokens = 256
+
+[[orchestrator.eval.source]]
+name = "bird-dev-nohint"          # headline
+num_examples = 106
+env.taskset.id = "text2sql"
+env.taskset.split = "bird_dev"
+env.taskset.with_hints = false
+env.taskset.prompt_version = 2
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+[[orchestrator.eval.source]]
+name = "bird-dev-hint"
+num_examples = 106
+env.taskset.id = "text2sql"
+env.taskset.split = "bird_dev"
+env.taskset.with_hints = true
+env.taskset.prompt_version = 2
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+[[orchestrator.eval.source]]
+name = "bird-dev-corrected"       # Wretblad et al. ACL 2024 corrected questions + gold
+num_examples = 106
+env.taskset.id = "text2sql"
+env.taskset.split = "bird_dev"
+env.taskset.corrected = true
+env.taskset.with_hints = false
+env.taskset.prompt_version = 2
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"

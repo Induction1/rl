@@ -1,0 +1,13 @@
+[project]
+name = "text2sql"
+version = "0.1.0"
+description = "Text-to-SQL RL environment on BIRD financial (verifiers v1): execution-match reward, no hints"
+requires-python = ">=3.11"
+dependencies = ["verifiers>=0.3.1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["text2sql"]
