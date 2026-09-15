@@ -1,0 +1,12 @@
+node_modules
+__pycache__
+.pytest_cache
+*.jsonl
+analysis
+candidates
+figures
+results
+runner
+runs
+sandbox/oracle_logs
+tests

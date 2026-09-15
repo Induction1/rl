@@ -1,0 +1,41 @@
+services:
+  task:
+    build: { context: .., dockerfile: sandbox/Dockerfile.task }
+    container_name: ps-task
+    networks: [ps]
+    working_dir: /task
+    environment:
+      ORACLE_URL: http://oracle:8732
+      HTTPS_PROXY: http://proxy:3128
+      HTTP_PROXY: http://proxy:3128
+      NO_PROXY: oracle
+    volumes:
+      - task-work:/task
+      - agent-home:/home/agent
+    command: ["sleep", "infinity"]
+
+  oracle:
+    build: { context: .., dockerfile: sandbox/Dockerfile.oracle }
+    container_name: ps-oracle
+    networks: [ps]
+    expose: ["8732"]
+    volumes:
+      - ./oracle_logs:/srv/log
+    command: ["node", "oracle_server.js", "--host", "0.0.0.0", "--port", "8732",
+              "--refill", "${ORACLE_REFILL:-3000}", "--bucket", "${ORACLE_BUCKET:-5000}",
+              "--max-turns", "${ORACLE_MAX_TURNS:-100}", "--log", "/srv/log/oracle_queries.jsonl"]
+
+  proxy:
+    build: { context: .., dockerfile: sandbox/Dockerfile.proxy }
+    container_name: ps-proxy
+    networks: [ps, egress]
+    expose: ["3128"]
+
+volumes:
+  task-work:
+  agent-home:
+
+networks:
+  ps:
+    internal: true
+  egress: {}

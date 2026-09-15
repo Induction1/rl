@@ -1,0 +1,259 @@
+[
+ {
+  "run": "opus_run3",
+  "label": "Opus 5",
+  "failed_battles": 429,
+  "profile_pct": {
+   "missing or extra event": 38.7,
+   "damage or HP value": 31.2,
+   "random outcome": 10.7,
+   "wording or tags": 9.8,
+   "order of events": 7.5,
+   "wrong move": 1.6,
+   "other detail": 0.5
+  },
+  "lost_turns_pct": {
+   "missing or extra event": 38.5,
+   "damage or HP value": 32.0,
+   "random outcome": 10.9,
+   "wording or tags": 8.9,
+   "order of events": 7.4,
+   "wrong move": 1.7,
+   "other detail": 0.6
+  },
+  "median_turn_of_first_mistake": {
+   "damage or HP value": 15,
+   "wording or tags": 19,
+   "random outcome": 17,
+   "order of events": 16,
+   "missing or extra event": 15,
+   "wrong move": 17,
+   "other detail": 33
+  },
+  "missing_or_extra_split": {
+   "-boost expected, -damage printed": 27,
+   "faint expected, cant printed": 20,
+   "engine skipped a -damage line": 17,
+   "-fail expected, -damage printed": 15,
+   "-boost expected, -unboost printed": 13,
+   "cant expected, -activate printed": 9,
+   "-damage expected, move printed": 8,
+   "move expected, cant printed": 7
+  }
+ },
+ {
+  "run": "opus48_run1",
+  "label": "Opus 4.8",
+  "failed_battles": 861,
+  "profile_pct": {
+   "missing or extra event": 36.5,
+   "order of events": 19.6,
+   "damage or HP value": 17.1,
+   "random outcome": 13.1,
+   "wording or tags": 11.3,
+   "type effectiveness line": 1.9,
+   "wrong move": 0.3,
+   "other detail": 0.2
+  },
+  "lost_turns_pct": {
+   "missing or extra event": 38.0,
+   "order of events": 18.0,
+   "damage or HP value": 16.8,
+   "wording or tags": 12.3,
+   "random outcome": 12.0,
+   "type effectiveness line": 2.3,
+   "wrong move": 0.4,
+   "other detail": 0.2
+  },
+  "median_turn_of_first_mistake": {
+   "damage or HP value": 11,
+   "order of events": 7,
+   "missing or extra event": 7,
+   "random outcome": 10,
+   "wording or tags": 11,
+   "type effectiveness line": 4,
+   "wrong move": 17,
+   "other detail": 33
+  },
+  "missing_or_extra_split": {
+   "move expected, cant printed": 92,
+   "switch expected, -damage printed": 47,
+   "switch expected, move printed": 46,
+   "-damage expected, -start printed": 20,
+   "-boost expected, -damage printed": 16,
+   "cant expected, move printed": 15,
+   "-damage expected, -fail printed": 14,
+   "-activate expected, move printed": 11
+  }
+ },
+ {
+  "run": "opus47_run1",
+  "label": "Opus 4.7",
+  "failed_battles": 919,
+  "profile_pct": {
+   "missing or extra event": 41.8,
+   "order of events": 14.7,
+   "crash": 9.6,
+   "damage or HP value": 8.7,
+   "wording or tags": 8.5,
+   "type effectiveness line": 6.3,
+   "wrong move": 5.5,
+   "random outcome": 4.9
+  },
+  "lost_turns_pct": {
+   "missing or extra event": 39.7,
+   "order of events": 13.6,
+   "crash": 12.4,
+   "wording or tags": 10.1,
+   "damage or HP value": 7.9,
+   "type effectiveness line": 6.7,
+   "wrong move": 5.0,
+   "random outcome": 4.6
+  },
+  "median_turn_of_first_mistake": {
+   "missing or extra event": 7,
+   "random outcome": 7,
+   "damage or HP value": 10,
+   "order of events": 5,
+   "type effectiveness line": 5,
+   "wording or tags": 7,
+   "wrong move": 12
+  },
+  "missing_or_extra_split": {
+   "move expected, cant printed": 68,
+   "switch expected, -damage printed": 32,
+   "engine added a -start line": 25,
+   "switch expected, move printed": 25,
+   "engine added a -fail line": 22,
+   "move expected, -fail printed": 21,
+   "-fieldactivate expected, faint printed": 15,
+   "-boost expected, -damage printed": 13
+  }
+ },
+ {
+  "run": "sonnet_run1",
+  "label": "Sonnet 5",
+  "failed_battles": 927,
+  "profile_pct": {
+   "damage or HP value": 37.0,
+   "missing or extra event": 31.1,
+   "random outcome": 16.5,
+   "type effectiveness line": 5.3,
+   "order of events": 4.9,
+   "wording or tags": 4.3,
+   "wrong move": 1.0
+  },
+  "lost_turns_pct": {
+   "damage or HP value": 37.5,
+   "missing or extra event": 29.5,
+   "random outcome": 15.8,
+   "type effectiveness line": 5.9,
+   "order of events": 5.7,
+   "wording or tags": 4.6,
+   "wrong move": 1.0
+  },
+  "median_turn_of_first_mistake": {
+   "missing or extra event": 8,
+   "random outcome": 7,
+   "damage or HP value": 7,
+   "type effectiveness line": 5,
+   "wording or tags": 7,
+   "order of events": 3,
+   "wrong move": 12
+  },
+  "missing_or_extra_split": {
+   "engine added a move line": 31,
+   "-heal expected, faint printed": 29,
+   "engine added a -damage line": 29,
+   "-damage expected, move printed": 23,
+   "-fail expected, -damage printed": 20,
+   "move expected, -damage printed": 16,
+   "switch expected, move printed": 15,
+   "-fieldactivate expected, faint printed": 13
+  }
+ },
+ {
+  "run": "opus46_run1",
+  "label": "Opus 4.6",
+  "failed_battles": 1000,
+  "profile_pct": {
+   "damage or HP value": 31.4,
+   "missing or extra event": 16.1,
+   "random outcome": 13.3,
+   "wording or tags": 11.0,
+   "wrong move": 10.9,
+   "log length": 8.8,
+   "order of events": 6.2,
+   "type effectiveness line": 2.3
+  },
+  "lost_turns_pct": {
+   "damage or HP value": 31.1,
+   "missing or extra event": 16.6,
+   "random outcome": 13.7,
+   "wording or tags": 10.9,
+   "wrong move": 10.5,
+   "log length": 9.5,
+   "order of events": 5.4,
+   "type effectiveness line": 2.3
+  },
+  "median_turn_of_first_mistake": {
+   "missing or extra event": 3,
+   "damage or HP value": 2,
+   "wrong move": 3,
+   "order of events": 2,
+   "log length": 0,
+   "wording or tags": 3,
+   "random outcome": 3,
+   "type effectiveness line": 1
+  },
+  "missing_or_extra_split": {
+   "-start expected, -damage printed": 37,
+   "engine skipped a cant line": 33,
+   "engine added a -damage line": 29,
+   "engine added a move line": 19,
+   "-heal expected, faint printed": 7,
+   "-fail expected, -damage printed": 7,
+   "-damage expected, move printed": 4,
+   "move expected, -damage printed": 4
+  }
+ },
+ {
+  "run": "sonnet46_run1",
+  "label": "Sonnet 4.6",
+  "failed_battles": 1000,
+  "profile_pct": {
+   "wording or tags": 33.0,
+   "missing or extra event": 28.0,
+   "damage or HP value": 16.3,
+   "type effectiveness line": 8.2,
+   "order of events": 7.9,
+   "random outcome": 6.6
+  },
+  "lost_turns_pct": {
+   "wording or tags": 34.1,
+   "missing or extra event": 26.3,
+   "damage or HP value": 16.9,
+   "type effectiveness line": 8.2,
+   "order of events": 7.6,
+   "random outcome": 6.9
+  },
+  "median_turn_of_first_mistake": {
+   "missing or extra event": 3,
+   "damage or HP value": 1,
+   "wording or tags": 2,
+   "random outcome": 1,
+   "type effectiveness line": 1,
+   "order of events": 2
+  },
+  "missing_or_extra_split": {
+   "engine added a move line": 163,
+   "cant expected, move printed": 26,
+   "engine added a -damage line": 19,
+   "-activate expected, move printed": 16,
+   "-damage expected, faint printed": 14,
+   "-damage expected, -ohko printed": 8,
+   "-heal expected, faint printed": 6,
+   "move expected, -damage printed": 6
+  }
+ }
+]

@@ -1,0 +1,6 @@
+FROM node:20-slim
+WORKDIR /srv
+RUN npm install --no-audit --no-fund pokemon-showdown@0.11.11
+COPY harness/oracle_server.js harness/normalize.js harness/gen1team.js /srv/
+RUN mkdir -p /srv/log && chown -R node:node /srv
+USER node

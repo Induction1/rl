@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates git procps \
+ && rm -rf /var/lib/apt/lists/*
+RUN useradd -m -u 1000 agent
+USER agent
+RUN curl -fsSL https://claude.ai/install.sh | bash
+ENV PATH="/home/agent/.local/bin:${PATH}"
+USER root
+WORKDIR /task
+COPY task/TASK.md /task/TASK.md
+COPY task/SPEC.md /task/SPEC.md
+COPY task/oracle  /task/oracle
+COPY docs/        /task/docs/
+RUN chmod +x /task/oracle && ln -s /task/oracle /usr/local/bin/oracle \
+ && chown -R agent:agent /task
+USER agent

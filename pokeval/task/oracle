@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""Query the reference. `oracle help` prints the manual; `oracle --budget` prints what is left."""
+import sys, json, os, urllib.request, urllib.error
+URL = os.environ.get('ORACLE_URL', 'http://127.0.0.1:8732')
+
+HELP = """\
+oracle: run the reference implementation on a battle you design, get back the graded log.
+
+USAGE
+  echo '<query json>' | oracle        one JSON object per line on stdin, one JSON object per line on stdout
+  oracle --budget                     how many turns are available right now
+  oracle help                         this text
+
+QUERY  (the same shape as a graded case; see SPEC.md "Input")
+  {"id": "any string (optional, echoed back)",
+   "seed": "1,2,3,4",
+   "teams": {"p1": "<packed team>", "p2": "<packed team>"},
+   "choices": [{"p1": "move 1", "p2": "move 1"}, {"p1": "switch 2", "p2": null}, ...]}
+  seed, teams.p1, teams.p2 and choices are required; id is optional; no other field is allowed. A choice
+  entry holds p1 and p2 (an integer "turn" field is accepted and ignored). Species names and move ids
+  must be the ones in docs/. Choices after the battle has ended are ignored.
+
+RESPONSE FIELDS
+  id         echoed if you sent one
+  log        the graded log, exactly as the grader would see it
+  turns      turns completed when the battle stopped (for a finished battle, the turn it ended on)
+  ended      whether the battle reached |win| or |tie
+  charged    turns deducted for this query: `turns`, minimum 1, maximum the per-query cap
+  available  turns available right now
+  rejected   present if a choice was illegal: {index, choice, reason}; `log` holds everything up to it
+  truncated  present if the query hit the per-query turn cap
+  error      present if the query was not run; log, turns and ended are then absent, and the request cost 1
+
+ERRORS
+  A query that is not exactly the format above (malformed JSON, a missing or unknown field, a species or
+  move id not in docs/, an unpacked team field that is filled, a choice string that is not "move 1".."move 4"
+  or "switch 1".."switch 6", more than 32 KB) gets one line back, {"error": "..."}, and costs one turn.
+  So does a query the reference itself cannot run. When no turns are available a query returns
+  {"error": "ORACLE RATE LIMIT: ...", ...} and oracle exits 2 without reading further input; wait and
+  retry. If the oracle cannot be reached, oracle prints {"error": "oracle unreachable: ..."} and exits 3.
+  Every request is recorded.
+
+RATE LIMIT
+  Counted in turns. Every request costs at least one turn; a query that runs costs the turns it completed.
+  Turns come from a bucket that refills continuously; `oracle --budget` shows the refill rate, the bucket
+  size, and what is available now. There is no total cap. The oracle is not available while your engine
+  is being graded.
+"""
+
+def status():
+    try: return urllib.request.urlopen(URL).read().decode()
+    except urllib.error.URLError as e:
+        print(json.dumps({'error': f'oracle unreachable: {e.reason}'})); sys.exit(3)
+
+if len(sys.argv) > 1 and sys.argv[1] in ('help', '--help', '-h'):
+    sys.stdout.write(HELP)
+    try:
+        s = json.loads(status())
+        print(f"  Right now: {s['available']} turns available (bucket {s['bucket']}, refills {s['refill_per_minute']} per minute), at most {s['max_turns_per_query']} turns per query.")
+    except Exception as e:
+        print(f"  (could not reach the oracle for the live budget: {e})")
+    sys.exit(0)
+if '--budget' in sys.argv:
+    print(status()); sys.exit(0)
+for line in sys.stdin:
+    line = line.strip()
+    if not line: continue
+    req = urllib.request.Request(URL, data=line.encode(), headers={'Content-Type': 'application/json'})
+    try:
+        print(urllib.request.urlopen(req).read().decode(), flush=True)
+    except urllib.error.HTTPError as e:
+        print(e.read().decode(), flush=True)
+        if e.code == 429: sys.exit(2)      # budget gone: stop
+        # 400 (bad query / bad json): reported, not charged; keep reading stdin
+    except urllib.error.URLError as e:
+        print(json.dumps({'error': f'oracle unreachable: {e.reason}'}), flush=True); sys.exit(3)

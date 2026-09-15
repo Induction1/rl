@@ -1,0 +1,3 @@
+FROM python:3.11-slim
+COPY sandbox/proxy.py /srv/proxy.py
+CMD ["python3", "/srv/proxy.py", "api.anthropic.com", "3128"]
