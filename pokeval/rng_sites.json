@@ -1,0 +1,499 @@
+{
+ "battles": 1000,
+ "faithful": 1000,
+ "sites": [
+  {
+   "site": "../data/mods/gen1/scripts.js:414",
+   "fn": "BattleActions.tryMoveHit",
+   "kind": "randomChance",
+   "code": "if (accuracy !== true && !this.battle.randomChance(accuracy, 256)) {",
+   "count": 40630,
+   "battles": 1000,
+   "args": [
+    {
+     "args": [
+      255,
+      256
+     ],
+     "n": 24602
+    },
+    {
+     "args": [
+      216,
+      256
+     ],
+     "n": 3658
+    },
+    {
+     "args": [
+      229,
+      256
+     ],
+     "n": 2946
+    },
+    {
+     "args": [
+      242,
+      256
+     ],
+     "n": 2177
+    },
+    {
+     "args": [
+      191,
+      256
+     ],
+     "n": 2115
+    },
+    {
+     "args": [
+      204,
+      256
+     ],
+     "n": 2093
+    }
+   ],
+   "distinct_arg_patterns": 40
+  },
+  {
+   "site": "../data/mods/gen1/scripts.js:694",
+   "fn": "BattleActions.getDamage",
+   "kind": "randomChance",
+   "code": "isCrit = this.battle.randomChance(critChance, 256);",
+   "count": 34008,
+   "battles": 1000,
+   "args": [
+    {
+     "args": [
+      45,
+      256
+     ],
+     "n": 2841
+    },
+    {
+     "args": [
+      50,
+      256
+     ],
+     "n": 2837
+    },
+    {
+     "args": [
+      35,
+      256
+     ],
+     "n": 2598
+    },
+    {
+     "args": [
+      40,
+      256
+     ],
+     "n": 1916
+    },
+    {
+     "args": [
+      30,
+      256
+     ],
+     "n": 1877
+    },
+    {
+     "args": [
+      27,
+      256
+     ],
+     "n": 1781
+    }
+   ],
+   "distinct_arg_patterns": 56
+  },
+  {
+   "site": "../data/mods/gen1/scripts.js:779",
+   "fn": "BattleActions.getDamage",
+   "kind": "random",
+   "code": "damage *= this.battle.random(217, 256);",
+   "count": 34008,
+   "battles": 1000,
+   "args": [
+    {
+     "args": [
+      217,
+      256
+     ],
+     "n": 34008
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/scripts.js:622",
+   "fn": "BattleActions.moveHit",
+   "kind": "randomChance",
+   "code": "if (this.battle.randomChance(secondaryChance, 256)) {",
+   "count": 7896,
+   "battles": 995,
+   "args": [
+    {
+     "args": [
+      26,
+      256
+     ],
+     "n": 2768
+    },
+    {
+     "args": [
+      85,
+      256
+     ],
+     "n": 2101
+    },
+    {
+     "args": [
+      77,
+      256
+     ],
+     "n": 1609
+    },
+    {
+     "args": [
+      25,
+      256
+     ],
+     "n": 549
+    },
+    {
+     "args": [
+      52,
+      256
+     ],
+     "n": 509
+    },
+    {
+     "args": [
+      103,
+      256
+     ],
+     "n": 360
+    }
+   ],
+   "distinct_arg_patterns": 6
+  },
+  {
+   "site": "battle.js:285 (Battle.eachEvent:296)",
+   "fn": "Battle.speedSort <- Battle.eachEvent:296",
+   "kind": "shuffle",
+   "code": "this.prng.shuffle(list, sorted, sorted + nextIndexes.length);",
+   "count": 7572,
+   "battles": 384,
+   "args": [
+    {
+     "args": [
+      "shuffle of 2"
+     ],
+     "n": 7572
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "battle.js:285 (Battle.fieldEvent:333)",
+   "fn": "Battle.speedSort <- Battle.fieldEvent:333",
+   "kind": "shuffle",
+   "code": "this.prng.shuffle(list, sorted, sorted + nextIndexes.length);",
+   "count": 1835,
+   "battles": 368,
+   "args": [
+    {
+     "args": [
+      "shuffle of 2"
+     ],
+     "n": 1793
+    },
+    {
+     "args": [
+      "shuffle of 4"
+     ],
+     "n": 41
+    },
+    {
+     "args": [
+      "shuffle of 3"
+     ],
+     "n": 1
+    }
+   ],
+   "distinct_arg_patterns": 3
+  },
+  {
+   "site": "../data/mods/gen1/scripts.js:426",
+   "fn": "BattleActions.tryMoveHit",
+   "kind": "sample",
+   "code": "hits = this.battle.sample([2, 2, 2, 3, 3, 3, 4, 5]);",
+   "count": 1559,
+   "battles": 595,
+   "args": [
+    {
+     "args": [
+      "sample of 8"
+     ],
+     "n": 1559
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "battle.js:285 (BattleQueue.sort:299)",
+   "fn": "Battle.speedSort <- BattleQueue.sort:299",
+   "kind": "shuffle",
+   "code": "this.prng.shuffle(list, sorted, sorted + nextIndexes.length);",
+   "count": 1448,
+   "battles": 374,
+   "args": [
+    {
+     "args": [
+      "shuffle of 2"
+     ],
+     "n": 1448
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/conditions.js:241",
+   "fn": "Battle.durationCallback",
+   "kind": "sample",
+   "code": "return this.sample([2, 2, 2, 3, 3, 3, 4, 5]);",
+   "count": 1116,
+   "battles": 439,
+   "args": [
+    {
+     "args": [
+      "sample of 8"
+     ],
+     "n": 1116
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/conditions.js:51",
+   "fn": "Battle.onBeforeMove",
+   "kind": "randomChance",
+   "code": "if (this.randomChance(63, 256)) {",
+   "count": 941,
+   "battles": 215,
+   "args": [
+    {
+     "args": [
+      63,
+      256
+     ],
+     "n": 941
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/moves.js:574",
+   "fn": "Battle.damageCallback",
+   "kind": "random",
+   "code": "const psywaveDamage = this.random(1, this.trunc(1.5 * pokemon.level));",
+   "count": 469,
+   "battles": 209,
+   "args": [
+    {
+     "args": [
+      1,
+      150
+     ],
+     "n": 469
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/moves.js:57",
+   "fn": "Battle.onStart",
+   "kind": "random",
+   "code": "this.effectState.time = this.random(2, 4);",
+   "count": 453,
+   "battles": 262,
+   "args": [
+    {
+     "args": [
+      2,
+      4
+     ],
+     "n": 453
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/conditions.js:162",
+   "fn": "Battle.onBeforeMove",
+   "kind": "randomChance",
+   "code": "if (!this.randomChance(128, 256)) {",
+   "count": 393,
+   "battles": 181,
+   "args": [
+    {
+     "args": [
+      128,
+      256
+     ],
+     "n": 393
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/conditions.js:304",
+   "fn": "Battle.onStart",
+   "kind": "random",
+   "code": "this.effectState.time = this.random(2, 4);",
+   "count": 330,
+   "battles": 236,
+   "args": [
+    {
+     "args": [
+      2,
+      4
+     ],
+     "n": 330
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/conditions.js:149",
+   "fn": "Battle.onStart",
+   "kind": "random",
+   "code": "this.effectState.time = this.random(2, 6);",
+   "count": 266,
+   "battles": 214,
+   "args": [
+    {
+     "args": [
+      2,
+      6
+     ],
+     "n": 266
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/conditions.js:74",
+   "fn": "Battle.onStart",
+   "kind": "random",
+   "code": "this.effectState.startTime = this.random(1, 8);",
+   "count": 166,
+   "battles": 131,
+   "args": [
+    {
+     "args": [
+      1,
+      8
+     ],
+     "n": 166
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "battle-queue.js:283",
+   "fn": "BattleQueue.insertChoice",
+   "kind": "random",
+   "code": "const index = firstIndex === lastIndex ? firstIndex : this.battle.random(firstIndex, lastIndex + 1);",
+   "count": 59,
+   "battles": 58,
+   "args": [
+    {
+     "args": [
+      0,
+      2
+     ],
+     "n": 59
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/moves.js:481",
+   "fn": "Battle.onHit",
+   "kind": "sample",
+   "code": "const moveid = this.sample(moves);",
+   "count": 46,
+   "battles": 46,
+   "args": [
+    {
+     "args": [
+      "sample of 4"
+     ],
+     "n": 45
+    },
+    {
+     "args": [
+      "sample of 3"
+     ],
+     "n": 1
+    }
+   ],
+   "distinct_arg_patterns": 2
+  },
+  {
+   "site": "../data/mods/gen1/moves.js:467",
+   "fn": "Battle.onHit",
+   "kind": "sample",
+   "code": "randomMove = this.sample(moves).id;",
+   "count": 25,
+   "battles": 23,
+   "args": [
+    {
+     "args": [
+      "sample of 163"
+     ],
+     "n": 25
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/moves.js:244",
+   "fn": "Battle.onStart",
+   "kind": "sample",
+   "code": "const [slotIndex, moveSlot] = this.sample(Array.from(pokemon.moveSlots.entries()).filter(([i, ms]) => ms.pp > 0));",
+   "count": 13,
+   "battles": 12,
+   "args": [
+    {
+     "args": [
+      "sample of 4"
+     ],
+     "n": 13
+    }
+   ],
+   "distinct_arg_patterns": 1
+  },
+  {
+   "site": "../data/mods/gen1/moves.js:249",
+   "fn": "Battle.onStart",
+   "kind": "random",
+   "code": "this.effectState.time = this.random(1, 9);",
+   "count": 13,
+   "battles": 12,
+   "args": [
+    {
+     "args": [
+      1,
+      9
+     ],
+     "n": 13
+    }
+   ],
+   "distinct_arg_patterns": 1
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+[
+ {
+  "run": "opus_run3",
+  "label": "Opus 5",
+  "first_engine_write": 29.6,
+  "first_bulk_oracle": 35.9,
+  "queries_first_30": 15,
+  "queries_total": 3152,
+  "first_above_10": 60,
+  "score_120": 73.68
+ },
+ {
+  "run": "opus48_run1",
+  "label": "Opus 4.8",
+  "first_engine_write": 2.0,
+  "first_bulk_oracle": 13.2,
+  "queries_first_30": 395,
+  "queries_total": 9823,
+  "first_above_10": 50,
+  "score_120": 39.13
+ },
+ {
+  "run": "opus47_run1",
+  "label": "Opus 4.7",
+  "first_engine_write": 3.0,
+  "first_bulk_oracle": 19.6,
+  "queries_first_30": 201,
+  "queries_total": 8335,
+  "first_above_10": 50,
+  "score_120": 29.11
+ },
+ {
+  "run": "sonnet_run1",
+  "label": "Sonnet 5",
+  "first_engine_write": 8.4,
+  "first_bulk_oracle": 15.9,
+  "queries_first_30": 283,
+  "queries_total": 13812,
+  "first_above_10": 40,
+  "score_120": 28.03
+ },
+ {
+  "run": "opus46_run1",
+  "label": "Opus 4.6",
+  "first_engine_write": 4.3,
+  "first_bulk_oracle": 17.9,
+  "queries_first_30": 695,
+  "queries_total": 22201,
+  "first_above_10": null,
+  "score_120": 6.98
+ },
+ {
+  "run": "sonnet46_run1",
+  "label": "Sonnet 4.6",
+  "first_engine_write": 12.1,
+  "first_bulk_oracle": null,
+  "queries_first_30": 11,
+  "queries_total": 67,
+  "first_above_10": null,
+  "score_120": 3.42
+ }
+]
